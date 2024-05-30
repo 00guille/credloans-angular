@@ -7,46 +7,47 @@ import { Observable, of } from 'rxjs';
 })
 export class RestService {
   // Use "url as path to db.json and complete the services"
-  url: string = "/api/";
+  url: string = "localhost/";
   msg: any;
 
   constructor(private http: HttpClient) { }
 
   getLogin(): Observable<any> {
     // return the Login array
-    return of();
+    return this.http.get(this.url + 'Login')
   }
+
   getCard(id: any): Observable<any> {
     // Using the id get the appropriate card data from Cards array
-    return of();
+    return this.http.get(this.url + 'Cards/' + id)
   }
   addLoan(data: any): Observable<any> {
     // Add the data to Loans array
-    return of();
+    return this.http.post(this.url + 'Loans', data);
   }
   getLoan(id: any): Observable<any> {
     // Using the id get the appropriate Loans data from Loans array
-    return of();
+    return this.http.get(this.url + 'Loans/' + id);
   }
   updateCards(data: any): Observable<any> {
     // Update the data in Cards array
-    return of()
+    const { id } = data;
+    return this.http.put(this.url + 'Cards/' + id, data);
   }
-  
+
   updateLoan(data: any): Observable<any> {
     // Update the data in Loans array
-    return of();
+    const { id } = data;
+    return this.http.put(this.url + 'Loans/' + id, data);
   }
 
   getMsg(): any {
     // return data msg variable
-    return of();
+    return of(this.msg);
   }
   setMsg(data: any): any {
     // set the data to msg variable
+    this.msg = data;
   }
-
-  // function return n prime numbers
-  
 
 }

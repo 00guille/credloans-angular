@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-
-import { LoansComponent } from './loans.component';
-import { Observable, of } from 'rxjs';
-import { CardsData, LoginData } from 'src/dbData';
-import { RestService } from 'src/app/services/rest.service';
-import { Router } from '@angular/router';
-import { ProfileComponent } from '../profile/profile.component';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 import { routes } from '../../app-routing.module'
+import { ProfileComponent } from '../profile/profile.component';
+import { RestService } from 'src/app/services/rest.service';
+import { Location } from '@angular/common';
+import { LoansComponent } from './loans.component';
+import { CardsData, LoginData } from 'src/dbData';
+import { Observable, of } from 'rxjs';
 
 export class MockRestService {
   Msg: any;
@@ -79,13 +79,12 @@ describe('LoansComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges()
     fixture.detectChanges()
+
+
   })
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('Initial rendering (welcome msg, form visible, table hidden)', () => {
+
     let title: HTMLElement = fixture.nativeElement.querySelector('h2');
     expect(title.innerHTML).toBe('Hi Arya Stark, You are eligible for a loan upto 50000 Rs.');
 
@@ -94,21 +93,40 @@ describe('LoansComponent', () => {
 
     let table: HTMLElement = fixture.nativeElement.querySelector("table");
     expect(table).toBeNull()
+
+
   });
 
-  it('Form validation check (duration) ', fakeAsync (() => {
+  it('Form validation check (amount) ', fakeAsync(() => {
     let control = component.loanForm.get('amount');
 
     control.setValue('');
     expect(control.valid).toBeFalsy();
-    
+
+    control.setValue(1223);
+    expect(control.valid).toBeFalsy();
+
+    control.setValue(12000);
+    expect(control.valid).toBeTruthy();
+
+  }));
+
+  it('Form validation check (duration) ', fakeAsync(() => {
+    let control = component.loanForm.get('amount');
+
+    control.setValue('');
+    expect(control.valid).toBeFalsy();
+
     control.setValue(12000);
     expect(control.valid).toBeTruthy();
   }));
 
+
+
   it('Button disable/enable check', fakeAsync(() => {
     let amount = component.loanForm.get('amount');
     let duration = component.loanForm.get('duration');
+
 
     fixture.detectChanges()
     tick();
@@ -133,11 +151,14 @@ describe('LoansComponent', () => {
     fixture.detectChanges();
     tick();
     expect(button.disabled).toBeTrue();
+
   }));
+
 
   it('Checking view() ', fakeAsync(() => {
     let amount = component.loanForm.get('amount');
     let duration = component.loanForm.get('duration');
+
 
     fixture.detectChanges();
     tick();
@@ -166,10 +187,64 @@ describe('LoansComponent', () => {
     fixture.detectChanges();
     table = fixture.nativeElement.querySelector("table");
     expect(table).toBeNull();
-    
+
   }))
 
+
   it('Checking view() input 2 ', fakeAsync(() => {
-    // TODO: seguir aqui loans.components.spec.ts05.jpg
-  }))
+    let amount = component.loanForm.get('amount');
+    let duration = component.loanForm.get('duration');
+
+    fixture.detectChanges();
+    tick();
+    let button = HTMLButtonElement = fixture.nativeElement.querySelector(".btn");
+
+    amount.setValue(22000);
+    duration.setValue(24)
+    fixture.detectChanges();
+    tick();
+    button.click();
+    fixture.detectChanges();
+    tick();
+
+    let table: HTMLElement = fixture.nativeElement.querySelector("table > tr:nth-child(2)");
+    expect(table.innerText).toContain("22000 Rs")
+    table = fixture.nativeElement.querySelector("table > tr:nth-child(4)");
+    expect(table.innerText).toContain("24640 Rs")
+    table = fixture.nativeElement.querySelector("table > tr:nth-child(6)");
+    expect(table.innerText).toContain("1027 Rs")
+
+
+  }));
+
+  it('Checking proceed()  ', fakeAsync(() => {
+    let amount = component.loanForm.get('amount');
+    let duration = component.loanForm.get('duration');
+    component.card = 4027106782381003;
+    spyOn(rs, 'updateCards').and.callThrough();
+    spyOn(rs, 'addLoan').and.callThrough();
+    const spyAlert = spyOn(window, 'alert').and.callThrough();
+
+    fixture.detectChanges();
+    tick();
+    let button: HTMLButtonElement = fixture.nativeElement.querySelector(".btn");
+
+    amount.setValue(22000);
+    duration.setValue(24)
+    fixture.detectChanges();
+    tick();
+    button.click();
+    fixture.detectChanges();
+    tick();
+
+    component.proceed();
+    tick();
+    fixture.detectChanges();
+    expect(rs.addLoan).toHaveBeenCalledWith(Object({id: 4027106782381003, name: 'Arya Stark', principal: 22000, finalAmount: 24640, duration: 24, emi: 1027}));
+    expect (rs. updateCards). toHaveBeenCalledWith(Object({ id: 4027106782381003, name: 'Arya Stark', credit_limit: 50000, loan_status: true }));
+    expect(spyAlert).toHaveBeenCalledWith("Loan approved !");
+    expect(location.path()).toBe('/Profile');
+
+  }));
+
 });
