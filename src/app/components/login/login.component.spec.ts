@@ -1,4 +1,3 @@
-import { LoginData } from './../../../dbData';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 
@@ -89,7 +88,7 @@ describe('LoginComponent', () => {
   });
 
   it('Form validation check (phone) ', fakeAsync(() => {
-    let control = component.loginFom.get('phone');
+    let control = component.loginForm.get('phone');
 
     control.setValue('')
     expect(control.valid).toBeFalsy();
