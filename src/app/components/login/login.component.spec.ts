@@ -206,7 +206,7 @@ describe('LoginComponent', () => {
 
     fixture.detectChanges();
     expect(component.next).toHaveBeenCalled();
-    expect(rs.getCard).toHaveBeenCalledWith(LoginData[0].card);
+    expect(rs.getCard).not.toHaveBeenCalledWith(LoginData[0].card);
     expect(spyAlert).toHaveBeenCalledWith("Invalid Credentials");
 
   }));

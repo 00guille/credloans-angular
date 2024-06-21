@@ -5,7 +5,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { CardsData, LoansData, LoginData } from 'src/dbData';
 
 
-fdescribe('RestService', () => {
+describe('RestService', () => {
   let rs: RestService;
   let httpTestingController: HttpTestingController
   beforeEach(() => {
