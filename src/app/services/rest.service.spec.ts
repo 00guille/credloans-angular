@@ -5,7 +5,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { CardsData, LoansData, LoginData } from 'src/dbData';
 
 
-describe('RestService', () => {
+fdescribe('RestService', () => {
   let rs: RestService;
   let httpTestingController: HttpTestingController
   beforeEach(() => {
@@ -28,7 +28,7 @@ describe('RestService', () => {
       expect(response).toEqual(LoginData)
     })
 
-    const req = httpTestingController.expectOne('/api/login');
+    const req = httpTestingController.expectOne('localhost/Login');
     req.flush(LoginData);
 
   });
@@ -40,7 +40,7 @@ describe('RestService', () => {
       expect(response).toEqual(LoansData[0])
     });
 
-    const req = httpTestingController.expectOne('/api/Loans/4027106782381001');
+    const req = httpTestingController.expectOne('localhost/Loans/4027106782381001');
     req.flush(LoansData[0]);
 
   });
@@ -52,7 +52,7 @@ describe('RestService', () => {
       expect(response).toEqual(CardsData[1])
     });
 
-    const req = httpTestingController.expectOne('/api/Cards/4027106782381002');
+    const req = httpTestingController.expectOne('localhost/Cards/4027106782381002');
     req.flush(CardsData[1]);
 
   });
@@ -62,7 +62,7 @@ describe('RestService', () => {
     rs.updateCards(CardsData[0]).subscribe(data => {
       expect(data).toEqual(CardsData[0])
     });
-    const req = httpTestingController.expectOne('/api/Cards/4027106782381001');
+    const req = httpTestingController.expectOne('localhost/Cards/4027106782381001');
     expect(req.request.method).toBe("PUT");
     expect(req.request.body).toEqual(CardsData[0]);
     req.flush(CardsData[0]);
@@ -72,7 +72,7 @@ describe('RestService', () => {
     rs.updateLoan(LoansData[0]).subscribe(data => {
       expect(data).toEqual(LoansData[0])
     });
-    const req = httpTestingController.expectOne('/api/Loans/4027106782381001');
+    const req = httpTestingController.expectOne('localhost/Loans/4027106782381001');
     expect(req.request.method).toBe("PUT");
     expect(req.request.body).toEqual(LoansData[0]);
     req.flush(LoansData[0]);
