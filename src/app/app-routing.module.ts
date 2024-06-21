@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { LoginComponent } from './components/login/login.component';
+import { LoansComponent } from './components/loans/loans.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 export const routes: Routes = [
   /**
@@ -8,6 +11,22 @@ export const routes: Routes = [
   // Login : LoginComponent
   // Loans : LoansComponent
   // Profile : ProfileComponent
+  {
+    path: 'Login',
+    component: LoginComponent,
+  },
+  {
+    path: 'Loans',
+    component: LoansComponent
+  },
+  {
+    path: 'Profile',
+    component: ProfileComponent
+  },
+  {
+    path: '**',
+    redirectTo: '/Login'
+  }
 ];
 
 @NgModule({
