@@ -43,7 +43,7 @@ export class RestService {
 
   getMsg(): any {
     // return data msg variable
-    return of(this.msg);
+    return this.msg;
   }
   setMsg(data: any): any {
     // set the data to msg variable
