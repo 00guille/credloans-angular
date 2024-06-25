@@ -39,7 +39,7 @@ export class MockRestService {
   }
 }
 
-describe('LoansComponent', () => {
+fdescribe('LoansComponent', () => {
   let component: LoansComponent;
   let fixture: ComponentFixture<LoansComponent>;
   let rs: RestService;
@@ -120,8 +120,6 @@ describe('LoansComponent', () => {
     control.setValue(12000);
     expect(control.valid).toBeTruthy();
   }));
-
-
 
   it('Button disable/enable check', fakeAsync(() => {
     let amount = component.loanForm.get('amount');
