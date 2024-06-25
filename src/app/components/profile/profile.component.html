@@ -1,18 +1,24 @@
 <!-- Show an initial message in the format below -->
 <!-- Obtain essential data of the user from Loans array in db.json using card id recieved -->
+<ng-container *ngIf="!!loanData && !!cardData">
+  <ng-container *ngIf="yyy > 0; else noCredit">
+    <!-- Show this msg if the user has credit limit remaining -->
+    <h2>Hi {{loanData.name}}, You have due of {{loanData.finalAmount}} Rs and you can upgrade the loan upto {{yyy}} Rs</h2>
+  </ng-container>
+  <ng-template #noCredit>
+    <!-- Show this msg if the user has exhausted the credit limit -->
+    <h2>Hi {{loanData.name}}, You have due of {{loanData.finalAmount}}Rs.</h2>
+  </ng-template>
 
-<h2>Hi name, you have due of xxx Rs and you can upgrade the loan upto yyy Rs</h2>
-<!-- Show this msg if the user has credit limit remaining -->
-<h2>Hi name, you have due of xxxRs.</h2><!-- Show this msg if the user has exhausted the credit limit -->
+  <!-- find xxx (final amount) from the Loan data of the user and calculate yyy (credit limit - final amount) -->
 
-<!-- find xxx (final amount) from the Loan data of the user and calculate yyy (credit limit - final amount) -->
 
-<div>
+<div *ngIf="showLoan">
   <table>
     <th colspan="2">Loan details</th>
     <tr>
       <td>Laon Amount</td>
-      <td>Rs</td>
+      <td>{{loanData.principal}} Rs</td>
     </tr>
     <tr>
       <td>Interest</td>
@@ -20,28 +26,34 @@
     </tr>
     <tr>
       <td>Amount to be paid</td>
-      <td>x Rs</td>
+      <td>{{loanData.finalAmount}} Rs</td>
     </tr>
     <tr>
       <td>Duration</td>
-      <td>x Months</td>
+      <td>{{loanData.duration}} Months</td>
     </tr>
     <tr>
       <td>Monthly EMI</td>
-      <td>x Rs</td>
+      <td>{{loanData.emi}} Rs</td>
     </tr>
-
+    <ng-container *ngIf="yyy > 0">
     <tr>
-      <td colspan="2" id="upgrade">
-        <button (click)="upgrade()">Upgrade</button>
-      </td>
-      <td>
-        <button (click)="cancel()">Cancel</button>
-      </td>
-      <td>
-        <button (click)="proceed()">Proceed</button>
-      </td>
+      <ng-container *ngIf="!isSimulating; else simulating">
+        <td colspan="2" id="upgrade">
+          <button (click)="upgrade()">Upgrade</button>
+        </td>
+      </ng-container>
+      <ng-template #simulating>
+        <td>
+          <button (click)="cancel()">Cancel</button>
+        </td>
+        <td>
+          <button (click)="proceed()">Proceed</button>
+        </td>
+      </ng-template>
     </tr>
+    </ng-container>
+
   </table>
 </div>
 
@@ -58,6 +70,7 @@
 
     <br>
     <!-- Disable the button if amount is invalid or entererd amoun exceeds the new upgrade limit of the user -->
-    <button (click)="view()" class="btn">View</button>
+    <button [disabled]="disableViewBtn" (click)="view()" class="btn">View</button>
   </form>
 </div>
+</ng-container>
