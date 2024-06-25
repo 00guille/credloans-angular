@@ -25,7 +25,7 @@ export class LoansComponent implements OnInit {
 
   ngOnInit(): void {
     // Obtain card id from login component and store it in this.card
-    this.card = 4027106782381003 || this.rest.getMsg();
+    this.card = this.rest.getMsg();
 
     // get the respective card data from Cards array in db.json using services and use it appropriately in template
     this.rest.getCard(this.card)
