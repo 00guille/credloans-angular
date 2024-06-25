@@ -48,7 +48,7 @@ export class MockRestService {
   }
 }
 
-describe('ProfileComponent', () => {
+fdescribe('ProfileComponent', () => {
   let component: ProfileComponent;
   let fixture: ComponentFixture<ProfileComponent>;
   let rs: RestService;
@@ -127,7 +127,7 @@ describe('ProfileComponent', () => {
 
   }));
 
-  it('Initial rendering (welcome msg, from hidden, table visible', () => {
+  it('Initial rendering (welcome msg, form hidden, table visible', () => {
 
     let title: HTMLElement = fixture.nativeElement.querySelector("h2");
     expect(title.innerHTML).toBe('Hi John Snow, You have due of 21200 Rs and you can upgrade the loan upto 78800 Rs')
@@ -175,7 +175,7 @@ describe('ProfileComponent', () => {
     fixture.detectChanges();
     tick();
 
-    let control = fixture.nativeElement.querySelector("amount");
+    let control = component.loanForm.get("amount");
     let button: HTMLButtonElement = fixture.nativeElement.querySelector(".btn");
 
     control.setValue("");
