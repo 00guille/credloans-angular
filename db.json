@@ -37,7 +37,7 @@
         {
             "id":4027106782381002,
             "name":"John Snow",
-            "principal": "20000",
+            "principal": 20000,
             "finalAmount": 21200,
             "duration": "12",
             "emi": 1767
