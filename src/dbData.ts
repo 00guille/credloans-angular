@@ -64,15 +64,15 @@ export const LoansData: any = [
         "emi": 2597
     },
     {
-        "id": "4027106782381002",
+        "id": 4027106782381002,
         "name": "John Snow",
         "principal": 20000,
         "finalAmount": 21200,
-        "duratn": "12",
+        "duration": "12",
         "emi": 1767
     },
     {
-        "id": "4027106782381005",
+        "id": 4027106782381005,
         "name": "Mike Ross",
         "principal": 20000,
         "finalAmount": 21200,
