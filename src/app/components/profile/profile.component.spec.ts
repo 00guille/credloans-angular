@@ -48,7 +48,7 @@ export class MockRestService {
   }
 }
 
-fdescribe('ProfileComponent', () => {
+describe('ProfileComponent', () => {
   let component: ProfileComponent;
   let fixture: ComponentFixture<ProfileComponent>;
   let rs: RestService;
@@ -114,7 +114,7 @@ fdescribe('ProfileComponent', () => {
     fixture.detectChanges();
 
     expect(rs.updateLoan).toHaveBeenCalledWith(Object({
-      id: '4027106782381005',
+      id: 4027106782381005,
       name: 'Mike Ross',
       principal: 40000,
       finalAmount: 42400,
@@ -123,7 +123,7 @@ fdescribe('ProfileComponent', () => {
     }));
     expect(spyAlert).toHaveBeenCalledWith("Loan updated !");
     let title: HTMLElement = fixture.nativeElement.querySelector("h2");
-    expect(title.innerHTML).toBe('hi Mike Ross, You have due of 42400 Rs and you can upgrade the loan upto 57600 Rs');
+    expect(title.innerHTML).toBe('Hi Mike Ross, You have due of 42400 Rs and you can upgrade the loan upto 57600 Rs');
 
   }));
 
