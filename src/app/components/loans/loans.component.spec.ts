@@ -39,7 +39,7 @@ export class MockRestService {
   }
 }
 
-fdescribe('LoansComponent', () => {
+describe('LoansComponent', () => {
   let component: LoansComponent;
   let fixture: ComponentFixture<LoansComponent>;
   let rs: RestService;
